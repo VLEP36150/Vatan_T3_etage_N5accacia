@@ -1,204 +1,143 @@
- <!DOCTYPE HTML>
+HTML
 
+<!DOCTYPE HTML>
 <html>
-
 <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Visite Virtuelle - 5 rue Acacia, Vatan</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pannellum@2.5.6/build/pannellum.css"/>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/pannellum@2.5.6/build/pannellum.js"></script>
+    <style>
+        html, body { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; background-color: #000; font-family: sans-serif; display: flex; flex-direction: column; }
+        
+        #panorama { width: 100%; flex: 1; background: #000; }
 
-<meta charset="utf-8">
+        /* NAVIGATION GROS BOUTONS */
+        .bottom-nav {
+            display: flex; gap: 5px; padding: 10px; background: #222; justify-content: center; flex-wrap: wrap;
+        }
+        .nav-btn {
+            background: #444; color: white; border: 1px solid #666; padding: 10px 5px; 
+            border-radius: 5px; cursor: pointer; font-size: 0.75rem; flex: 1; text-align: center; min-width: 70px;
+        }
 
-<title>Visite Virtuelle - VATAN</title>
+        /* BANDEAU DESCRIPTION EN BAS */
+        #desc-panel {
+            width: 100%; background: #111; color: white; padding: 15px; 
+            box-sizing: border-box; border-top: 1px solid #444; min-height: 90px;
+        }
 
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pannellum@2.5.6/build/pannellum.css"/>
+        /* RENDRE LES FLÈCHES BEAUCOUP PLUS GROSSES POUR MOBILE */
+        .pnlm-hotspot-base { width: 60px !important; height: 60px !important; margin-left: -30px !important; margin-top: -30px !important; }
+        .pnlm-scene-hotspot { background-color: rgba(255, 255, 255, 0.5) !important; border: 4px solid white !important; border-radius: 50% !important; }
 
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/pannellum@2.5.6/build/pannellum.js"></script>
+        /* ACCUEIL */
+        #loading-screen {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: #222 url('sejour_T3_etage.JPG') center/cover no-repeat;
+            z-index: 10000; display: flex; justify-content: center; align-items: center;
+            color: white; text-align: center; transition: opacity 0.8s;
+        }
+        #loading-screen::before { content: ""; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: -1; }
+        .hidden { opacity: 0; visibility: hidden; pointer-events: none; }
 
-<style>
-
-html, body { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; background-color: #000; font-family: sans-serif; display: flex; flex-direction: column; }
-
-#panorama { width: 100%; flex: 1; background: #000; }
-
-
-/* NAVIGATION GROS BOUTONS */
-
-.bottom-nav {
-
-display: flex; gap: 5px; padding: 10px; background: #222; justify-content: center; flex-wrap: wrap;
-
-}
-
-.nav-btn {
-
-background: #444; color: white; border: 1px solid #666; padding: 12px 5px;
-
-border-radius: 5px; cursor: pointer; font-size: 0.75rem; flex: 1; text-align: center; min-width: 80px;
-
-}
-
-
-/* BANDEAU DESCRIPTION EN BAS */
-
-#desc-panel {
-
-width: 100%; background: #111; color: white; padding: 15px;
-
-box-sizing: border-box; border-top: 1px solid #444; min-height: 100px;
-
-}
-
-
-/* RENDRE LES FLÈCHES BEAUCOUP PLUS GROSSES POUR MOBILE */
-
-.pnlm-hotspot-base { width: 60px !important; height: 60px !important; margin-left: -30px !important; margin-top: -30px !important; }
-
-.pnlm-scene-hotspot { background-color: rgba(255, 255, 255, 0.5) !important; border: 4px solid white !important; border-radius: 50% !important; }
-
-
-/* ACCUEIL */
-
-#loading-screen {
-
-position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-
-background: #222 url('vatan_entree_sejour_comp.jpg') center/cover no-repeat;
-
-z-index: 10000; display: flex; justify-content: center; align-items: center;
-
-color: white; text-align: center; transition: opacity 0.8s;
-
-}
-
-#loading-screen::before { content: ""; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: -1; }
-
-.hidden { opacity: 0; visibility: hidden; }
-
-
-/* --- AJUSTEMENT POLICE POUR MOBILE --- */
-
-@media (max-width: 768px) {
-
-.nav-btn {
-
-font-size: 1rem !important; /* Police plus grande pour les boutons */
-
-font-weight: bold;
-
-}
-
-#desc-panel {
-
-font-size: 1.1rem !important; /* Police plus grande pour la description */
-
-}
-
-#desc-panel strong {
-
-font-size: 1.2rem !important;
-
-}
-
-}
-
-</style>
-
+        /* --- AJUSTEMENT POLICE POUR MOBILE --- */
+        @media (max-width: 768px) {
+            .nav-btn {
+                font-size: 0.8rem !important;
+                font-weight: bold;
+            }
+            #desc-panel {
+                font-size: 1.1rem !important;
+            }
+            #desc-panel strong {
+                font-size: 1.2rem !important;
+            }
+        }
+    </style>
 </head>
-
 <body>
 
+    <div id="loading-screen">
+        <div><h1>T3 - 1er étage, 5 rue Acacia, VATAN</h1><p>Chargement de la visite...</p></div>
+    </div>
 
-<div id="loading-screen">
+    <div id="panorama"></div>
 
-<div><h1>22 rue Grande, VATAN</h1><p>Chargement de la visite...</p></div>
+    <div class="bottom-nav">
+        <div class="nav-btn" onclick="viewer.loadScene('sejour', 0, 0)">🏠 Séjour</div>
+        <div class="nav-btn" onclick="viewer.loadScene('cuisine', 0, 0)">🍳 Cuisine</div>
+        <div class="nav-btn" onclick="viewer.loadScene('couloir', 0, 0)">🚪 Couloir</div>
+        <div class="nav-btn" onclick="viewer.loadScene('chambre_1', 0, 0)">🛏️ Ch. 1</div>
+        <div class="nav-btn" onclick="viewer.loadScene('chambre_2', 0, 0)">🛏️ Ch. 2</div>
+        <div class="nav-btn" onclick="viewer.loadScene('sdb', 0, 0)">🚿 SdB</div>
+    </div>
 
-</div>
+    <div id="desc-panel">
+        <strong id="desc-title">Appartement T3 (1er étage) - 5 rue Acacia, VATAN</strong>
+        <p id="desc-text" style="margin-top: 5px; font-size: 0.85rem; color: #ccc;">Visite virtuelle de l'appartement. Utilisez les boutons du bas ou cliquez sur les flèches pour naviguer.</p>
+    </div>
 
+    <script>
+        var viewer = pannellum.viewer('panorama', {
+            "default": { "firstScene": "sejour", "autoLoad": true, "hfov": 100, "showControls": false },
+            "scenes": {
+                "sejour": {
+                    "panorama": "sejour_T3_etage.JPG",
+                    "hotSpots": [
+                        { "pitch": -10, "yaw": 45, "type": "scene", "text": "Autre angle du Séjour", "sceneId": "sejour_2", "targetYaw": 0 },
+                        { "pitch": -10, "yaw": 135, "type": "scene", "text": "Cuisine", "sceneId": "cuisine", "targetYaw": 0 }
+                    ]
+                },
+                "sejour_2": {
+                    "panorama": "sejour_2_T3_etage.JPG",
+                    "hotSpots": [
+                        { "pitch": -10, "yaw": -135, "type": "scene", "text": "Séjour principal", "sceneId": "sejour", "targetYaw": 0 },
+                        { "pitch": -10, "yaw": 0, "type": "scene", "text": "Vers le couloir", "sceneId": "couloir", "targetYaw": 0 }
+                    ]
+                },
+                "cuisine": {
+                    "panorama": "cuisine_T3_etage.JPG",
+                    "hotSpots": [
+                        { "pitch": -10, "yaw": 180, "type": "scene", "text": "Retour Séjour", "sceneId": "sejour", "targetYaw": 0 }
+                    ]
+                },
+                "couloir": {
+                    "panorama": "couloir_T3_etage.JPG",
+                    "hotSpots": [
+                        { "pitch": -10, "yaw": 0, "type": "scene", "text": "Chambre 1", "sceneId": "chambre_1", "targetYaw": 0 },
+                        { "pitch": -10, "yaw": 90, "type": "scene", "text": "Chambre 2", "sceneId": "chambre_2", "targetYaw": 0 },
+                        { "pitch": -10, "yaw": -90, "type": "scene", "text": "Salle de bains", "sceneId": "sdb", "targetYaw": 0 },
+                        { "pitch": -10, "yaw": 180, "type": "scene", "text": "Retour Séjour", "sceneId": "sejour", "targetYaw": 0 }
+                    ]
+                },
+                "chambre_1": {
+                    "panorama": "chambre_1_T3_etage.JPG",
+                    "hotSpots": [
+                        { "pitch": -10, "yaw": 180, "type": "scene", "text": "Retour Couloir", "sceneId": "couloir", "targetYaw": 0 }
+                    ]
+                },
+                "chambre_2": {
+                    "panorama": "chambre_2_T3_etage.JPG",
+                    "hotSpots": [
+                        { "pitch": -10, "yaw": 180, "type": "scene", "text": "Retour Couloir", "sceneId": "couloir", "targetYaw": 0 }
+                    ]
+                },
+                "sdb": {
+                    "panorama": "sdb_T3_etage.JPG",
+                    "hotSpots": [
+                        { "pitch": -10, "yaw": 180, "type": "scene", "text": "Retour Couloir", "sceneId": "couloir", "targetYaw": 0 }
+                    ]
+                }
+            }
+        });
 
-<div id="panorama"></div>
-
-
-<div class="bottom-nav">
-
-<div class="nav-btn" onclick="viewer.loadScene('entree', 0, 0)">🏠 Entrée</div>
-
-<div class="nav-btn" onclick="viewer.loadScene('cuisine', 0, 65)">🍳 Cuisine</div>
-
-<div class="nav-btn" onclick="viewer.loadScene('chambre_gauche', 0, 0)">🛏️ Ch. Gauche</div>
-
-<div class="nav-btn" onclick="viewer.loadScene('chambre_droite', 0, -100)">🛏️ Ch. Droite</div>
-
-</div>
-
-
-<div id="desc-panel">
-
-<strong>Appartement T3 Duplex - 22 rue Grande, VATAN</strong>
-
-<p style="margin-top: 5px; font-size: 0.85rem; color: #ccc;">Ce logement comprend un séjour lumineux ouvert sur cuisine et deux chambres et une salle d'eau à l'étage.</p>
-
-</div>
-
-
-<script>
-
-var viewer = pannellum.viewer('panorama', {
-
-"default": { "firstScene": "entree", "autoLoad": true, "hfov": 100, "showControls": false },
-
-"scenes": {
-
-"entree": {
-
-"panorama": "vatan_entree_sejour_comp.jpg",
-
-"hotSpots": [
-
-{ "pitch": -10, "yaw": 0, "type": "scene", "text": "Cuisine", "sceneId": "cuisine", "targetYaw": 180 },
-
-{ "pitch": -10, "yaw": -90, "type": "scene", "text": "Monter à l'étage", "sceneId": "chambre_gauche", "targetYaw": 0 }
-
-]
-
-},
-
-"cuisine": {
-
-"panorama": "vatan_cuis_wc_comp.jpg",
-
-"hotSpots": [{ "pitch": -10, "yaw": 135, "type": "scene", "text": "Retour", "sceneId": "entree", "targetYaw": 180 }]
-
-},
-
-"chambre_gauche": {
-
-"panorama": "vatan_ch_1.jpg",
-
-"hotSpots": [{ "pitch": -10, "yaw": -170, "type": "scene", "text": "Autre Chambre", "sceneId": "chambre_droite", "targetYaw": 180 }]
-
-},
-
-"chambre_droite": {
-
-"panorama": "vatan_ch_2.jpg",
-
-"hotSpots": [{ "pitch": -15, "yaw": 0, "type": "scene", "text": "Descendre", "sceneId": "entree", "targetYaw": 180 }]
-
-}
-
-}
-
-});
-
-
-viewer.on('load', function() {
-
-document.getElementById('loading-screen').classList.add('hidden');
-
-});
-
-</script>
-
+        viewer.on('load', function() {
+            setTimeout(function() {
+                document.getElementById('loading-screen').classList.add('hidden');
+            }, 300);
+        });
+    </script>
 </body>
-
 </html>
-
-
